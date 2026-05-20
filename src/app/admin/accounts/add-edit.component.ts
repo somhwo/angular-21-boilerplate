@@ -77,11 +77,11 @@ export class AddEditComponent implements OnInit, OnDestroy {
           }),
         )
         .subscribe({
-          next: (x) => {
+          next: x => {
             this.form.patchValue(x);
             this.cdr.detectChanges();
           },
-          error: (error) => {
+          error: error => {
             this.alertService.error(error);
             this.cdr.detectChanges();
           },
@@ -132,7 +132,7 @@ export class AddEditComponent implements OnInit, OnDestroy {
           this.alertService.success(message, { keepAfterRouteChange: true });
           this.router.navigateByUrl('/admin/accounts');
         },
-        error: (error) => {
+        error: error => {
           this.alertService.error(error);
           this.submitting = false;
           this.cdr.detectChanges();
