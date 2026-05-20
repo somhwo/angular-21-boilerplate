@@ -10,19 +10,17 @@ import { VerifyEmailComponent } from './verify-email.component';
 import { ForgotPasswordComponent } from './forgot-password.component';
 import { ResetPasswordComponent } from './reset-password.component';
 
+const ACCOUNT_COMPONENTS = [
+  LayoutComponent,
+  LoginComponent,
+  RegisterComponent,
+  VerifyEmailComponent,
+  ForgotPasswordComponent,
+  ResetPasswordComponent,
+];
+
 @NgModule({
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        AccountRoutingModule
-    ],
-    declarations: [
-        LayoutComponent,
-        LoginComponent,
-        RegisterComponent,
-        VerifyEmailComponent,
-        ForgotPasswordComponent,
-        ResetPasswordComponent
-    ]
+  imports: [CommonModule, ReactiveFormsModule, AccountRoutingModule],
+  declarations: ACCOUNT_COMPONENTS,
 })
-export class AccountModule { }
+export class AccountModule {}

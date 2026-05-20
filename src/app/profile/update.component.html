@@ -1,5 +1,5 @@
-<h1>{{ title }}</h1>
-<form *ngIf="!loading" [formGroup]="form" (ngSubmit)="onSubmit()">
+<h1>Update Profile</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="row">
     <div class="mb-3 col-2">
       <label class="form-label">Title</label>
@@ -43,40 +43,21 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="mb-3 col-7">
-      <label class="form-label">Email</label>
-      <input
-        type="text"
-        formControlName="email"
-        class="form-control"
-        [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
-      />
-      <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
-        <div *ngIf="f['email'].errors['required']">Email is required</div>
-        <div *ngIf="f['email'].errors['email']">Email must be a valid email address</div>
-      </div>
-    </div>
-    <div class="mb-3 col-5">
-      <label class="form-label">Role</label>
-      <select
-        formControlName="role"
-        class="form-select"
-        [ngClass]="{ 'is-invalid': submitted && f['role'].errors }"
-      >
-        <option value=""></option>
-        <option value="User">User</option>
-        <option value="Admin">Admin</option>
-      </select>
-      <div *ngIf="submitted && f['role'].errors" class="invalid-feedback">
-        <div *ngIf="f['role'].errors['required']">Role is required</div>
-      </div>
+  <div class="mb-3">
+    <label class="form-label">Email</label>
+    <input
+      type="text"
+      formControlName="email"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+    />
+    <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+      <div *ngIf="f['email'].errors['required']">Email is required</div>
+      <div *ngIf="f['email'].errors['email']">Email must be a valid email address</div>
     </div>
   </div>
-  <div *ngIf="id">
-    <h3 class="pt-3">Change Password</h3>
-    <p>Leave blank to keep the same password</p>
-  </div>
+  <h3 class="pt-3">Change Password</h3>
+  <p>Leave blank to keep the same password</p>
   <div class="row">
     <div class="mb-3 col">
       <label class="form-label">Password</label>
@@ -106,13 +87,14 @@
     </div>
   </div>
   <div class="mb-3">
-    <button [disabled]="submitting" class="btn btn-primary">
+    <button type="submit" [disabled]="submitting" class="btn btn-primary me-2">
       <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
-      Save
+      Update
     </button>
-    <a routerLink="/admin/accounts" class="btn btn-link">Cancel</a>
+    <button type="button" (click)="onDelete()" [disabled]="deleting" class="btn btn-danger">
+      <span *ngIf="deleting" class="spinner-border spinner-border-sm me-1"></span>
+      Delete
+    </button>
+    <a routerLink="../" href="" class="btn btn-link">Cancel</a>
   </div>
 </form>
-<div *ngIf="loading" class="text-center m-5">
-  <span class="spinner-border spinner-border-lg align-center"></span>
-</div>

@@ -6,7 +6,11 @@ import { finalize, first } from 'rxjs/operators';
 import { AccountService, AlertService } from '@app/_services';
 import { MustMatch } from '@app/_helpers';
 
-@Component({ templateUrl: 'add-edit.component.html', standalone: false })
+@Component({
+  selector: 'app-account-add-edit',
+  templateUrl: 'add-edit.component.html',
+  standalone: false,
+})
 export class AddEditComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   id?: string;

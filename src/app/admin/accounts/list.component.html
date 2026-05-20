@@ -1,0 +1,38 @@
+<h1>Accounts</h1>
+<a routerLink="add" class="btn btn-sm btn-success mb-2">Add Account</a>
+<table *ngIf="!loading" class="table table-striped">
+  <thead>
+    <tr>
+      <th style="width: 30%">Title</th>
+      <th style="width: 30%">First Name</th>
+      <th style="width: 30%">Last Name</th>
+      <th style="width: 10%">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let account of accounts">
+      <td>{{ account.title }}</td>
+      <td>{{ account.firstName }}</td>
+      <td>{{ account.lastName }}</td>
+      <td style="white-space: nowrap">
+        <a routerLink="edit/{{ account.id }}" class="btn btn-sm btn-primary me-1">Edit</a>
+        <button
+          *ngIf="!account.isDeleting && account.id"
+          (click)="deleteAccount(account.id)"
+          class="btn btn-sm btn-danger"
+        >
+          Delete
+        </button>
+        <span *ngIf="account.isDeleting" class="badge bg-warning">Deleting...</span>
+      </td>
+    </tr>
+    <tr *ngIf="accounts.length === 0">
+      <td colspan="4" class="text-center">
+        <div class="p-4">No accounts to display</div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="loading" class="text-center p-4">
+  <span class="spinner-border spinner-border-lg align-center"></span>
+</div>
