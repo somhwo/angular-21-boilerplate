@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, NgZone} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, NonNullableFormBuilder } from '@angular/forms';
 import { first } from 'rxjs/operators';
@@ -31,6 +31,8 @@ export class ResetPasswordComponent implements OnInit {
     private router: Router,
     private accountService: AccountService,
     private alertService: AlertService,
+    private changeDetector: ChangeDetectorRef,
+    private zone: NgZone
   ) {}
 
   ngOnInit() {
@@ -49,16 +51,27 @@ export class ResetPasswordComponent implements OnInit {
     // remove token from url to prevent http referer leakage
     this.router.navigate([], { relativeTo: this.route, replaceUrl: true });
 
+    if (!token) {
+      this.tokenStatus = TokenStatus.Invalid;
+      return;
+    }
+
     this.accountService
       .validateResetToken(token)
       .pipe(first())
       .subscribe({
-        next: () => {
+        next: (response) => {
           this.token = token;
-          this.tokenStatus = TokenStatus.Valid;
+          this.zone.run(() => {
+            this.tokenStatus = TokenStatus.Valid;
+            this.changeDetector.detectChanges();
+          });
         },
-        error: () => {
-          this.tokenStatus = TokenStatus.Invalid;
+        error: (error) => {
+          this.zone.run(() => {
+            this.tokenStatus = TokenStatus.Invalid;
+            this.changeDetector.detectChanges();
+          });
         },
       });
   }
